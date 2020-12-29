@@ -1,0 +1,43 @@
+.post{
+	background-color: #FFFFFF;
+	box-shadow: all;
+	padding: 15px;
+	margin: 10px;
+	width: 200px;
+	border-radius: 5px;
+	border: 1px solid rgba(0,0,0,.125);
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+}
+.post p{
+	margin: 8px;
+}
+
+.post-image{
+	height:200px;
+	width: 200px;
+
+}
+
+.post-action{
+	display: flex;
+	justify-content: space-between;
+}
+
+.btn{
+	border-radius: 5px;
+	padding: 8px;
+	color: white;
+	border: 1px solid rgba(0,0,0,.125);
+}
+
+.btn-update{
+	background-color: #3c8dbc;
+	border: 1px solid #FFF;
+}
+
+.btn-delete{
+	background-color: #dc3545;
+		border: 1px solid #FFF;
+}

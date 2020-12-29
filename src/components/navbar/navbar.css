@@ -1,0 +1,82 @@
+.navbar{
+	display: flex;
+	justify-content: space-between;
+	background-color: #3c8dbc;
+	align-items: center;
+	padding-right: 10px;
+	padding-left: 10px;
+
+}
+
+.navbar-action{
+	display: flex;
+	align-items: center;
+}
+
+.navbar-btn{
+	padding: 5px;
+	margin: 5px;
+	outline: none;
+	border:1px solid white;
+	background-color: #FFF;
+	border-radius: 2px;
+}
+.navbar-btn a{
+	text-decoration: none;
+	color: #3c8dbc;
+}
+
+.ul-profile{
+	position: absolute;
+	background-color:#3c8dbc; 
+	padding: 10px;
+	
+	margin: 0;
+	right: 2px;
+	border-radius: 5px;
+}
+
+.ul-profile li{
+	list-style: none;
+	text-align: center;
+	padding: 5px;
+	/*display: none;*/
+	background-color:#3c8dbc; 
+	border-top: 1px solid white;
+}
+
+.ul-profile li:hover{
+	list-style: none;
+	text-align: center;
+	padding: 5px;
+	background-color:white;
+	border:#3c8dbc;  
+}
+
+.btn-profile{
+	background-color: #3c8dbc;
+	color: black;
+	padding: 8px;
+	border: none;
+	outline: none;
+
+}
+
+.btn-profile:hover{
+	background-color: white;
+	color: #3c8dbc;
+	padding: 10px;
+	border: none;
+	border-radius: 5px;
+}
+
+.btn-profile:hover ~ .ul-profile{
+	display: block;
+}
+
+
+.btn-logout{
+	position: absolute;
+	background:none;
+
+}

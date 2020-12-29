@@ -1,0 +1,41 @@
+.post-container{
+	display: flex;
+	flex-wrap: wrap;
+	justify-content: center;
+}
+
+.barang-container{
+	padding: 20px;
+}
+
+.container-search{
+	display: flex;
+	justify-content: center;
+}
+
+.inp-search{
+	padding: 8px;
+	width: 50%;
+	border-radius: 5px;
+	border: 1px solid grey;
+}
+
+.btn-search{
+	border-radius: 5px;
+	border: 1px solid grey;
+	background-color: #6c757d;
+	color: white;
+	padding: 8px;
+}
+
+
+
+.btn-add-product{
+	border-radius: 5px;
+	border: 1px solid grey;
+	background-color: #3c8dbc;
+	color: white;
+	margin: 20px;
+	padding: 8px;
+	outline: none;
+}
