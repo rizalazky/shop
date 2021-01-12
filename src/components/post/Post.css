@@ -41,3 +41,11 @@
 	background-color: #dc3545;
 		border: 1px solid #FFF;
 }
+
+.btn-keranjang{
+	/* #157347 green bootstrap */
+	/* #FFCA2C yellow bootstrap */
+	/* ##0DCAF0 blue bootstrap */
+	background-color:#0DCAF0 ;
+		border: 1px solid #FFF;
+}

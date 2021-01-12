@@ -17,7 +17,7 @@ function Barang() {
 	const history=useHistory()
 	const [showModalAdd,setShowModalAdd]=useState(false)
 	const [inpSearch,setInpSearch]=useState('')
-
+	// const [isKeranjang,setIsKeranjang]=useState(false)
 
 	useEffect(()=>{
 		
@@ -190,26 +190,46 @@ function Barang() {
 
 	const handleSearch=()=>{
 		console.log(inpSearch)
-		db.collection('barang').where('namaBarang','==',inpSearch).get()
-			.then(snap=>{
-				console.log(snap)
-				if(snap.empty){
-					console.log('No Matching Data')
-					setInpSearch('')
-					setBarang([])
-					// return
-				}else{
-					let data=[]
-					snap.forEach(doc=>{
-						// setBarang(doc.data())
-						data.push(doc.data());
-					})
-					setBarang(data)
-				}
+		let data=[]
+		// let seacrh=barang.find(dt=>dt.namaBarang===inpSearch)
+		for(let i=0;i<barang.length;i++){
+			
+			var patt = new RegExp(inpSearch.toLocaleLowerCase());
+			var res = patt.exec(barang[i].namaBarang.toLowerCase());
+			console.log(res)
+			if(res !=null){
+				data.push(barang[i])
+			}
+			// setBarang()
+		}
+		setBarang(data)
+		
+
+		// console.log(seacrh,"test")
+		// db.collection('barang').where('namaBarang','==',inpSearch).get()
+		// 	.then(snap=>{
+		// 		console.log(snap)
+		// 		if(snap.empty){
+		// 			console.log('No Matching Data')
+		// 			setInpSearch('')
+		// 			setBarang([])
+		// 			// return
+		// 		}else{
+		// 			let data=[]
+		// 			snap.forEach(doc=>{
+		// 				// setBarang(doc.data())
+		// 				data.push(doc.data());
+		// 			})
+		// 			setBarang(data)
+		// 		}
 
 				
-			})
+		// 	})
 	}
+
+	// const insertKeranjang=(data)=>{
+	// 	console.log(data)
+	// }
 
   return (
     <div>
@@ -246,7 +266,8 @@ function Barang() {
 	    						qty={b.qty} 
 	    						user={user}
 	    						update={()=>openModal(b)}
-	    						deleteBarang={deleteBarang}
+								deleteBarang={deleteBarang}
+								// insertKeranjang={()=>insertKeranjang(b)}
 	    						/>
 	    				)
 	    			})

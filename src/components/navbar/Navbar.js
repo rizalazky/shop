@@ -12,17 +12,18 @@ function Navbar({user,logout}){
 	return(
 		<nav className='navbar'>
 			<div>
-				<h3>Klik Dokter Shop</h3>	
+				<h3>Shop</h3>	
 			</div>
 			{
 				user ?(
 					<div className='navbar-profile'>
-						<button className='btn-profile' onClick={()=>setDisplayLogout(!displayLogout)}>{user.displayName} ></button>
+						<button className='btn-profile' onClick={()=>setDisplayLogout(!displayLogout)}>{user.displayName}</button>
 						<br></br>
 						{
 							displayLogout && <ul className='ul-profile'>
 								<li>{user.email}</li>
 								<li onClick={logout}>Log Out</li>
+								{/* <li>Keranjang</li> */}
 							</ul>
 						}
 						
