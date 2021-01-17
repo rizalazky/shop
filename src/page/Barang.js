@@ -17,6 +17,7 @@ function Barang() {
 	const history=useHistory()
 	const [showModalAdd,setShowModalAdd]=useState(false)
 	const [inpSearch,setInpSearch]=useState('')
+	const [keranjang,setKeranjang]=useState({})
 	// const [isKeranjang,setIsKeranjang]=useState(false)
 
 	useEffect(()=>{
@@ -48,7 +49,7 @@ function Barang() {
 	const deleteBarang=(e)=>{
 		let con=window.confirm('Yakin ingin Menghapus data??')
 
-		if(con==true){
+		if(con===true){
 			let id=e.target.id
 			db.collection('barang').doc(id).delete()
 			.then(()=>{
@@ -86,7 +87,7 @@ function Barang() {
 	const changeDataModal=(event)=>{
 		let target=event.target.name
 		let value=event.target.value
-		if(target=='gambar'){
+		if(target==='gambar'){
 			value=event.target.files[0]
 		}
 		setDataModal({...dataModal,[target]:value})
@@ -96,7 +97,7 @@ function Barang() {
 
 	const onSubmitModal=()=>{
 		setIsLoading(true)
-		if(dataModal.submitType == 'update'){
+		if(dataModal.submitType === 'update'){
 			if(dataModal.gambar.name){
 				let photoRef=storage.ref(`images/barang/${dataModal.gambar.name}`)
 
@@ -191,7 +192,7 @@ function Barang() {
 	const handleSearch=()=>{
 		console.log(inpSearch)
 		let data=[]
-		// let seacrh=barang.find(dt=>dt.namaBarang===inpSearch)
+		// let seacrh=barang.find(dt=>dt.namaBarang====inpSearch)
 		for(let i=0;i<barang.length;i++){
 			
 			var patt = new RegExp(inpSearch.toLocaleLowerCase());
@@ -204,32 +205,74 @@ function Barang() {
 		}
 		setBarang(data)
 		
-
-		// console.log(seacrh,"test")
-		// db.collection('barang').where('namaBarang','==',inpSearch).get()
-		// 	.then(snap=>{
-		// 		console.log(snap)
-		// 		if(snap.empty){
-		// 			console.log('No Matching Data')
-		// 			setInpSearch('')
-		// 			setBarang([])
-		// 			// return
-		// 		}else{
-		// 			let data=[]
-		// 			snap.forEach(doc=>{
-		// 				// setBarang(doc.data())
-		// 				data.push(doc.data());
-		// 			})
-		// 			setBarang(data)
-		// 		}
-
-				
-		// 	})
 	}
 
-	// const insertKeranjang=(data)=>{
-	// 	console.log(data)
-	// }
+	useEffect(()=>{
+		db.collection('transaksi').where('checkout','==',"false").get()
+		.then(res=>{
+			let idTransaksi=res.docs[0].id
+			db.collection('tansaksi').doc(idTransaksi).collection('keranjang').onSnapshot(snap=>{
+				setKeranjang({
+					id:idTransaksi,
+					data:snap.docs.map(d=>d.data())
+				})
+			})
+			
+			console
+			.log(keranjang)
+		})
+	},[])
+
+	const insertKeranjang=(data)=>{
+		if(data.qty<=0){
+			alert('Sold Out')
+		}else{
+			db.collection('transaksi').where('checkout','==',"false").get()
+				.then(res=>{
+					let idTransaksi=res.docs[0].id
+					if(res.empty===true){
+						console.log('kosong')
+						data.qty=1
+						db.collection('transaksi').add({
+							checkout:"false"
+						}).then((d)=>{
+							data.jumlahTransaksi=1
+							db.collection('transaksi').doc(d.id).collection('keranjang').doc(data.kodeBarang)
+								.set(data)
+						})
+					}else{
+						console.log(idTransaksi)
+						console.log(data.kodeBarang)
+						db.collection('transaksi').doc(idTransaksi).collection('keranjang').doc(data.kodeBarang)
+							.get().then(ker=>{
+								// console.log(ker)
+								if(ker.exists==false){
+									data.jumlahTransaksi=1
+									db.collection('transaksi').doc(idTransaksi)
+										.collection('keranjang').doc(data.kodeBarang)
+										.set(data)
+								}else{
+									// if exist
+									// console.log(ker.data())
+									data.jumlahTransaksi=ker.data().jumlahTransaksi + 1
+									db.collection('transaksi').doc(idTransaksi)
+										.collection('keranjang').doc(data.kodeBarang)
+										.set(data)
+								}
+							})
+					}
+					// edit qty barang after add keranjang
+					if(data.qty !== 0){
+						data.qty=data.qty - 1
+					}
+					db.collection('barang').doc(data.kodeBarang).set(data)
+					// setKeranjang({
+					// 	id:idTransaksi,
+					// 	data:[...keranjang.data,data]
+					// })
+				})
+		}
+	}
 
   return (
     <div>
@@ -239,7 +282,7 @@ function Barang() {
     	{
     		showModalAdd && <Modal close={()=>setShowModalAdd(false)} onSubmit={onSubmitModal} data={dataModal} changeData={changeDataModal}/>
     	}
-    	<Navbar user={user} logout={logout}/>
+    	<Navbar user={user} logout={logout} keranjang={keranjang}/>
     	<div className='barang-container'>
     		<div className='container-search'>
     			<input className='inp-search' value={inpSearch} placeholder='search' onChange={(e)=>setInpSearch(e.target.value)}/>
@@ -254,7 +297,7 @@ function Barang() {
 	    			barang.map((b)=>{
 	    				b.submitType='update'
 	    				
-	    				if(b.gambarUrl == undefined){
+	    				if(b.gambarUrl === undefined){
 	    					b.gambarUrl='https://firebasestorage.googleapis.com/v0/b/klik-dokter-shop.appspot.com/o/images%2Fbarang%2FnullPhoto.png?alt=media&token=dc9e42d5-496b-4805-9f76-ba953accf63f'
 	    				}
 	    				return(
@@ -267,7 +310,7 @@ function Barang() {
 	    						user={user}
 	    						update={()=>openModal(b)}
 								deleteBarang={deleteBarang}
-								// insertKeranjang={()=>insertKeranjang(b)}
+								insertKeranjang={()=>insertKeranjang(b)}
 	    						/>
 	    				)
 	    			})

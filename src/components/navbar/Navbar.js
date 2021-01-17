@@ -4,7 +4,7 @@ import {
 } from 'react-router-dom'
 import React,{useState} from 'react'
 
-function Navbar({user,logout}){
+function Navbar({user,logout,keranjang}){
 
 	const [displayLogout,setDisplayLogout]=useState(false)
 
@@ -12,7 +12,7 @@ function Navbar({user,logout}){
 	return(
 		<nav className='navbar'>
 			<div>
-				<h3>Shop</h3>	
+				<h3><Link to='/'>Shop</Link></h3>	
 			</div>
 			{
 				user ?(
@@ -22,8 +22,12 @@ function Navbar({user,logout}){
 						{
 							displayLogout && <ul className='ul-profile'>
 								<li>{user.email}</li>
+								<li>
+									<Link to={`/keranjang/${keranjang.id}`}>
+									Keranjang <span className='text-jml-keranjang'>{keranjang.data.length}</span>
+									</Link>
+								</li>
 								<li onClick={logout}>Log Out</li>
-								{/* <li>Keranjang</li> */}
 							</ul>
 						}
 						

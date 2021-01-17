@@ -1,0 +1,39 @@
+.item-keranjang{
+    list-style: none;
+    background-color: #FFFFFF;
+    margin-bottom: 15px;
+    border: 1px solid rgba(0, 0, 0, .125);
+}
+
+.item-keranjang-container{
+    display: flex;
+    justify-content: space-between;
+    padding: 15px;
+}
+
+.item-keranjang-image{
+    height: 200px;
+    width: 170px;
+}
+.item-keranjang-desc{
+    flex: 1;
+    /* background-color: red; */
+    padding-left: 10px;
+}
+.item-keranjang-qty{
+    width: 50px;
+    height: 21px;
+    text-align: center;
+}
+
+.item-keranjang-plus{
+    height: 25px;
+    width: 25px;
+    /* padding: 5px;*/
+    text-align: center;
+}
+.item-keranjang-min{
+    height: 25px;
+    width: 25px;
+    text-align: center;
+}

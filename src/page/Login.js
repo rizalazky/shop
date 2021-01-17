@@ -44,7 +44,7 @@ function Login(){
 
 			<div className='form-login'>
 				<div className='form-login-header'>
-					<h3>Klik Dokter Shop</h3>
+					<h3>Shop</h3>
 				</div>
 				{
 					isRegister && (

@@ -1,0 +1,15 @@
+.keranjang-container{
+    padding: 20px;
+    padding-bottom:80px ;
+}
+.checkout-container{
+    display: flex;
+    justify-content: space-between;
+    position: fixed;
+    bottom: 0;
+    padding: 15px;
+    box-sizing: border-box;
+    background-color: #FFFFFF;
+    border: 1px solid rgba(0,0,0,.125);
+    width: 97%;
+}

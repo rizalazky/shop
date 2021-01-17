@@ -2,7 +2,7 @@
 import './App.css';
 import Barang from './page/Barang'
 import Login from './page/Login'
-// import Keranjang from './page/Keranjang'
+import Keranjang from './page/Keranjang'
 import {
   BrowserRouter as Router,
   Switch,
@@ -22,8 +22,8 @@ function App() {
           </Route>
           <Route path='/register' component={Login}>
           </Route>
-          {/* <Route path='/keranjang' component={Keranjang}>
-          </Route> */}
+          <Route path='/keranjang/:id' component={Keranjang}>
+          </Route>
         </Switch>
       </Router>
       </div>

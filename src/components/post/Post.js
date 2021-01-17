@@ -17,8 +17,7 @@ function Post({id,imageUrl,title,harga,desc,user,update,deleteBarang,qty,insertK
 							<button className='btn btn-update' onClick={update}>Update</button>
 							<button className='btn btn-delete' onClick={deleteBarang} id={id}>Delete</button>
 						</div>
-						{/* <button className='btn btn-keranjang' onClick={insertKeranjang} id={id}>Masukan Keranjang</button> */}
-						
+						<button className='btn btn-keranjang' onClick={insertKeranjang} id={id}>Masukan Keranjang</button>			
 					</>
 				)
 			}
