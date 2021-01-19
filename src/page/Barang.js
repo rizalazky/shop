@@ -6,7 +6,6 @@ import Navbar from '../components/navbar/Navbar'
 import Modal from '../components/modal/Modal'
 import './Barang.css'
 import {auth,db,storage} from '../config/Firebase'
-import {useHistory} from 'react-router'
 import Loading from '../components/loading/Loading'
 
 
@@ -14,7 +13,6 @@ function Barang() {
 	const [isLoading,setIsLoading]=useState(false)
 	const [barang,setBarang]=useState([])
 	const [user,setUser]=useState(null)
-	const history=useHistory()
 	const [showModalAdd,setShowModalAdd]=useState(false)
 	const [inpSearch,setInpSearch]=useState('')
 	const [keranjang,setKeranjang]=useState({})
@@ -207,21 +205,7 @@ function Barang() {
 		
 	}
 
-	useEffect(()=>{
-		db.collection('transaksi').where('checkout','==',"false").get()
-		.then(res=>{
-			let idTransaksi=res.docs[0].id
-			db.collection('tansaksi').doc(idTransaksi).collection('keranjang').onSnapshot(snap=>{
-				setKeranjang({
-					id:idTransaksi,
-					data:snap.docs.map(d=>d.data())
-				})
-			})
-			
-			console
-			.log(keranjang)
-		})
-	},[])
+	
 
 	const insertKeranjang=(data)=>{
 		if(data.qty<=0){
@@ -229,10 +213,9 @@ function Barang() {
 		}else{
 			db.collection('transaksi').where('checkout','==',"false").get()
 				.then(res=>{
-					let idTransaksi=res.docs[0].id
+					
 					if(res.empty===true){
 						console.log('kosong')
-						data.qty=1
 						db.collection('transaksi').add({
 							checkout:"false"
 						}).then((d)=>{
@@ -241,12 +224,13 @@ function Barang() {
 								.set(data)
 						})
 					}else{
+						let idTransaksi=res.docs[0].id
 						console.log(idTransaksi)
 						console.log(data.kodeBarang)
 						db.collection('transaksi').doc(idTransaksi).collection('keranjang').doc(data.kodeBarang)
 							.get().then(ker=>{
 								// console.log(ker)
-								if(ker.exists==false){
+								if(ker.exists===false){
 									data.jumlahTransaksi=1
 									db.collection('transaksi').doc(idTransaksi)
 										.collection('keranjang').doc(data.kodeBarang)
@@ -262,10 +246,12 @@ function Barang() {
 							})
 					}
 					// edit qty barang after add keranjang
-					if(data.qty !== 0){
+					if(data.qty >= 0){
 						data.qty=data.qty - 1
 					}
+					console.log(data)
 					db.collection('barang').doc(data.kodeBarang).set(data)
+					alert('berhasil memasukan ke keranjang')
 					// setKeranjang({
 					// 	id:idTransaksi,
 					// 	data:[...keranjang.data,data]

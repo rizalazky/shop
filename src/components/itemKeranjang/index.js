@@ -1,22 +1,22 @@
 import React,{useEffect, useState} from 'react'
 import './style.css'
 
-const ItemKeranjang=({ker,countTotal})=>{
-    const [qty,setQty]=useState(ker.jumlahTransaksi)
+const ItemKeranjang=({ker,handleCahngeQty,countTotal})=>{
+    // const [qty,setQty]=useState(ker.jumlahTransaksi)
 
     const handlePlus=()=>{
-        setQty(qty+1)
+        // setQty(qty+1)
+        countTotal(ker.jumlahTransaksi + 1,ker.kodeBarang)
     }
 
     const handleMin=()=>{
-        if(qty>0){
-            setQty(qty-1)
+        if(ker.jumlahTransaksi>1){
+            // setQty(qty-1)
+            countTotal(ker.jumlahTransaksi - 1,ker.kodeBarang)
         }
     }
 
-    useEffect(()=>{
-        countTotal(qty,ker.kodeBarang)
-    },[qty])
+    
 
     return(
         <li className='item-keranjang'>
@@ -30,10 +30,12 @@ const ItemKeranjang=({ker,countTotal})=>{
                 <div>
                     <div>
                         <button onClick={handlePlus} className='item-keranjang-plus'>+</button>
-                        <input type='text' value={qty} onChange={(e)=>setQty(e.target.value)} className='item-keranjang-qty'/>
+                        <input type='text' value={ker.jumlahTransaksi} 
+                            onChange={(e)=>countTotal(e.target.value,ker.kodeBarang)} 
+                            className='item-keranjang-qty'/>
                         <button onClick={handleMin} className='item-keranjang-min'>-</button>
                     </div>
-                    <p>Rp. {qty*ker.harga}</p>
+                    <p>Rp. {ker.jumlahTransaksi*ker.harga}</p>
                 </div>
             </div>
         </li>

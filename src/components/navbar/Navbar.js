@@ -23,8 +23,13 @@ function Navbar({user,logout,keranjang}){
 							displayLogout && <ul className='ul-profile'>
 								<li>{user.email}</li>
 								<li>
-									<Link to={`/keranjang/${keranjang.id}`}>
-									Keranjang <span className='text-jml-keranjang'>{keranjang.data.length}</span>
+									<Link to={`/keranjang`}>
+									Keranjang <span className='text-jml-keranjang'>{0}</span>
+									</Link>
+								</li>
+								<li>
+									<Link to={`/history`}>
+									History transaction
 									</Link>
 								</li>
 								<li onClick={logout}>Log Out</li>

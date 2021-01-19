@@ -3,6 +3,7 @@ import './App.css';
 import Barang from './page/Barang'
 import Login from './page/Login'
 import Keranjang from './page/Keranjang'
+import History from './page/History'
 import {
   BrowserRouter as Router,
   Switch,
@@ -22,7 +23,9 @@ function App() {
           </Route>
           <Route path='/register' component={Login}>
           </Route>
-          <Route path='/keranjang/:id' component={Keranjang}>
+          <Route path='/keranjang' component={Keranjang}>
+          </Route>
+          <Route path='/history' component={History}>
           </Route>
         </Switch>
       </Router>

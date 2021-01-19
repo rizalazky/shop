@@ -3,7 +3,7 @@ import './Post.css'
 function Post({id,imageUrl,title,harga,desc,user,update,deleteBarang,qty,insertKeranjang}){
 	return(
 		<div key={id} className='post'>
-			<img src={imageUrl} className='post-image'/>
+			<img src={imageUrl} className='post-image' alt={id}/>
 			<div>
 				<p>Kode SKU : {id}</p>
 				<p>{title}</p>
